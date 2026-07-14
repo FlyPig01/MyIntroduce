@@ -321,11 +321,7 @@
       // 彩蛋：仅简体中文显示
       var egg = document.getElementById('easterEgg');
       if (egg) {
-        if (lang === 'zh') {
-          egg.classList.add('show');
-        } else {
-          egg.classList.remove('show');
-        }
+        egg.style.display = (lang === 'zh') ? 'flex' : 'none';
       }
 
       // 更新页面标题

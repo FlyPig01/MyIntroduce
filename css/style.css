@@ -421,18 +421,73 @@ body {
   display: flex;
 }
 
-.easter-img {
+.easter-img-wrapper {
+  position: relative;
   max-width: 320px;
   width: 100%;
+}
+
+.easter-img {
+  width: 100%;
   border-radius: var(--radius);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+  border: 2px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+  animation: eggFloat 3s ease-in-out infinite;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.easter-img:hover {
+  transform: scale(1.05) rotate(-1deg);
+  border-color: rgba(0, 212, 255, 0.8);
+  box-shadow: 0 0 50px rgba(0, 212, 255, 0.5), 0 0 80px rgba(168, 85, 247, 0.2);
+}
+
+.easter-img-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius);
+  background: linear-gradient(45deg, var(--accent), var(--accent-secondary), var(--accent));
+  background-size: 300% 300%;
+  z-index: -1;
+  opacity: 0.5;
+  animation: eggBorderGlow 3s linear infinite;
+  filter: blur(8px);
 }
 
 .easter-caption {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  letter-spacing: 0.05em;
+  font-size: 1.05rem;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+  animation: eggCaptionPulse 2s ease-in-out infinite;
+}
+
+@keyframes eggFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes eggBorderGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes eggCaptionPulse {
+  0%, 100% { opacity: 0.8; text-shadow: 0 0 10px rgba(0, 212, 255, 0.4); }
+  50% { opacity: 1; text-shadow: 0 0 20px rgba(0, 212, 255, 0.8), 0 0 30px rgba(168, 85, 247, 0.3); }
+}
+
+/* 滚动触发时的入场动画 */
+.easter-egg.reveal-on-scroll.visible .easter-img {
+  animation: eggFloat 3s ease-in-out infinite, eggEnter 0.8s ease-out;
+}
+
+@keyframes eggEnter {
+  0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+  60% { opacity: 1; transform: scale(1.1) rotate(2deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
 }
 
 /* ============================================
