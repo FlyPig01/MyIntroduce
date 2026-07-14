@@ -318,6 +318,16 @@
         }
       }
 
+      // 彩蛋：仅简体中文显示
+      var egg = document.getElementById('easterEgg');
+      if (egg) {
+        if (lang === 'zh') {
+          egg.classList.add('show');
+        } else {
+          egg.classList.remove('show');
+        }
+      }
+
       // 更新页面标题
       document.title = t.nickname + ' - ' + t.about;
 

@@ -408,6 +408,33 @@ body {
   letter-spacing: 0.05em;
 }
 
+/* --- 彩蛋区域（仅简体中文） --- */
+.easter-egg {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-lg);
+}
+
+.easter-egg.show {
+  display: flex;
+}
+
+.easter-img {
+  max-width: 320px;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+}
+
+.easter-caption {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+}
+
 /* ============================================
    动画 - 页面加载入场
    ============================================ */
