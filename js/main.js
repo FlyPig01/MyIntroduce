@@ -265,11 +265,8 @@
    * 语言切换器
    */
   function initLanguageSwitcher() {
-    var switcher = document.getElementById('langSwitcher');
-    var btn = document.getElementById('langBtn');
-    var menu = document.getElementById('langMenu');
-    var currentLabel = document.getElementById('langCurrent');
-    var items = menu.querySelectorAll('li');
+    var flags = document.getElementById('langFlags');
+    var flagBtns = flags.querySelectorAll('.lang-flag');
     var currentLang = 'zh';
 
     // 从 localStorage 恢复语言偏好
@@ -317,15 +314,12 @@
       // 更新页面标题
       document.title = t.nickname + ' - ' + t.about;
 
-      // 更新语言按钮显示
-      currentLabel.textContent = t._name;
-
-      // 更新菜单激活状态
-      for (var n = 0; n < items.length; n++) {
-        if (items[n].getAttribute('data-lang') === lang) {
-          items[n].classList.add('active');
+      // 更新国旗激活状态
+      for (var n = 0; n < flagBtns.length; n++) {
+        if (flagBtns[n].getAttribute('data-lang') === lang) {
+          flagBtns[n].classList.add('active');
         } else {
-          items[n].classList.remove('active');
+          flagBtns[n].classList.remove('active');
         }
       }
 
@@ -338,24 +332,13 @@
       currentLang = lang;
     }
 
-    // 切换菜单开合
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      switcher.classList.toggle('open');
-    });
-
-    // 点击外部关闭菜单
-    document.addEventListener('click', function () {
-      switcher.classList.remove('open');
-    });
-
-    // 菜单项点击切换语言
-    for (var i = 0; i < items.length; i++) {
-      items[i].addEventListener('click', function (e) {
-        e.stopPropagation();
+    // 点击国旗切换语言
+    for (var i = 0; i < flagBtns.length; i++) {
+      flagBtns[i].addEventListener('click', function () {
         var lang = this.getAttribute('data-lang');
-        applyLang(lang);
-        switcher.classList.remove('open');
+        if (lang !== currentLang) {
+          applyLang(lang);
+        }
       });
     }
 

@@ -34,23 +34,11 @@
             <p class="player-id" data-i18n="subtitle">轻尘亦可飞扬</p>
 
             <!-- 语言切换器 -->
-            <div class="lang-switcher" id="langSwitcher">
-                <button class="lang-btn" id="langBtn" type="button">
-                    <svg class="lang-globe" viewBox="0 0 24 24">
-                        <path fill="currentColor"
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93C7.05 19.44 4 16.08 4 12c0-.61.08-1.21.21-1.78L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41C17.93 5.78 20 8.65 20 12c0 2.08-.81 3.98-2.1 5.39z" />
-                    </svg>
-                    <span class="lang-current" id="langCurrent">简体中文</span>
-                    <svg class="lang-arrow" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M7 10l5 5 5-5z" />
-                    </svg>
-                </button>
-                <ul class="lang-menu" id="langMenu">
-                    <li data-lang="zh" class="active">简体中文</li>
-                    <li data-lang="en">English</li>
-                    <li data-lang="ja">日本語</li>
-                    <li data-lang="ko">한국어</li>
-                </ul>
+            <div class="lang-flags" id="langFlags">
+                <button data-lang="zh" class="lang-flag active" title="简体中文">🇨🇳</button>
+                <button data-lang="en" class="lang-flag" title="English">🇺🇸</button>
+                <button data-lang="ja" class="lang-flag" title="日本語">🇯🇵</button>
+                <button data-lang="ko" class="lang-flag" title="한국어">🇰🇷</button>
             </div>
         </header>
 
@@ -83,7 +71,7 @@
                         VRChat
                     </span>
                     <span class="tag">
-                        <img src="images/Valorant.ico" alt="" class="tag-icon" onerror="this.style.display='none'" />
+                        <img src="images/ACLOS.ico" alt="" class="tag-icon" onerror="this.style.display='none'" />
                         无畏契约
                     </span>
                 </div>
