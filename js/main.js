@@ -318,12 +318,6 @@
         }
       }
 
-      // 彩蛋：仅简体中文显示
-      var egg = document.getElementById('easterEgg');
-      if (egg) {
-        egg.style.display = (lang === 'zh') ? 'flex' : 'none';
-      }
-
       // 更新页面标题
       document.title = t.nickname + ' - ' + t.about;
 
@@ -382,8 +376,8 @@
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
     var particles = [];
-    var particleCount = 60;
-    var colors = ['rgba(0, 212, 255, ', 'rgba(168, 85, 247, ', 'rgba(255, 255, 255, '];
+    var particleCount = 100;
+    var colors = ['rgba(0, 212, 255, ', 'rgba(168, 85, 247, ', 'rgba(255, 255, 255, ', 'rgba(0, 255, 200, '];
 
     function resize() {
       canvas.width = window.innerWidth;
@@ -394,8 +388,8 @@
       return {
         x: Math.random() * canvas.width,
         y: canvas.height + Math.random() * 100,
-        size: Math.random() * 2.5 + 0.5,
-        speed: Math.random() * 0.6 + 0.2,
+        size: Math.random() * 3 + 0.5,
+        speed: Math.random() * 0.8 + 0.2,
         drift: (Math.random() - 0.5) * 0.4,
         opacity: Math.random() * 0.5 + 0.2,
         color: colors[Math.floor(Math.random() * colors.length)],
