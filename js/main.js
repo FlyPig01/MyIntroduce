@@ -209,8 +209,7 @@
       confirm: '确定',
       qq: { title: 'QQ: 3261547169', info: 'QQ号：3261547169', desc: '点击确定将尝试打开 QQ 对话窗口' },
       email: { title: '邮箱: 3261547169@qq.com', info: '邮箱地址：3261547169@qq.com', desc: '点击确定将打开邮件客户端' },
-      steam: { title: 'Steam 个人主页', info: '即将跳转到 Steam 个人主页', desc: 'steamcommunity.com/profiles/76561199515925903' },
-      discord: { title: '守法公民不翻墙', info: '守法公民不翻墙', desc: '' }
+      steam: { title: 'Steam 个人主页', info: '即将跳转到 Steam 个人主页', desc: 'steamcommunity.com/profiles/76561199515925903' }
     },
     en: {
       _name: 'English',
@@ -226,8 +225,7 @@
       confirm: 'OK',
       qq: { title: 'QQ: 3261547169', info: 'QQ: 3261547169', desc: 'Click OK to open QQ chat' },
       email: { title: 'Email: 3261547169@qq.com', info: 'Email: 3261547169@qq.com', desc: 'Click OK to open email client' },
-      steam: { title: 'Steam Profile', info: 'Opening Steam profile', desc: 'steamcommunity.com/profiles/76561199515925903' },
-      discord: { title: 'Law-abiding citizen, no VPN', info: 'Law-abiding citizen, no VPN', desc: '' }
+      steam: { title: 'Steam Profile', info: 'Opening Steam profile', desc: 'steamcommunity.com/profiles/76561199515925903' }
     },
     ja: {
       _name: '日本語',
@@ -243,8 +241,7 @@
       confirm: '確認',
       qq: { title: 'QQ: 3261547169', info: 'QQ番号：3261547169', desc: 'OKをクリックしてQQチャットを開く' },
       email: { title: 'メール: 3261547169@qq.com', info: 'メールアドレス：3261547169@qq.com', desc: 'OKをクリックしてメールクライアントを開く' },
-      steam: { title: 'Steamプロフィール', info: 'Steamプロフィールに移動します', desc: 'steamcommunity.com/profiles/76561199515925903' },
-      discord: { title: '善良な市民はVPNを使いません', info: '善良な市民はVPNを使いません', desc: '' }
+      steam: { title: 'Steamプロフィール', info: 'Steamプロフィールに移動します', desc: 'steamcommunity.com/profiles/76561199515925903' }
     },
     ko: {
       _name: '한국어',
@@ -260,8 +257,7 @@
       confirm: '확인',
       qq: { title: 'QQ: 3261547169', info: 'QQ번호: 3261547169', desc: '확인을 클릭하여 QQ 채팅 열기' },
       email: { title: '이메일: 3261547169@qq.com', info: '이메일 주소: 3261547169@qq.com', desc: '확인을 클릭하여 이메일 클라이언트 열기' },
-      steam: { title: 'Steam 프로필', info: 'Steam 프로필로 이동합니다', desc: 'steamcommunity.com/profiles/76561199515925903' },
-      discord: { title: '양심적인 시민은 VPN을 쓰지 않습니다', info: '양심적인 시민은 VPN을 쓰지 않습니다', desc: '' }
+      steam: { title: 'Steam 프로필', info: 'Steam 프로필로 이동합니다', desc: 'steamcommunity.com/profiles/76561199515925903' }
     }
   };
 
@@ -306,7 +302,7 @@
 
       // 更新社交按钮的 title / data-info / data-desc
       var btns = document.querySelectorAll('.social-btn');
-      var btnClasses = ['qq', 'email', 'steam', 'discord'];
+      var btnClasses = ['qq', 'email', 'steam'];
       for (var k = 0; k < btns.length; k++) {
         for (var m = 0; m < btnClasses.length; m++) {
           if (btns[k].classList.contains(btnClasses[m]) && t[btnClasses[m]]) {

@@ -478,11 +478,6 @@ body {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
 }
 
-.social-btn.discord:hover {
-  border-color: rgba(88, 101, 242, 0.6);
-  box-shadow: 0 0 20px rgba(88, 101, 242, 0.3);
-}
-
 .social-btn:hover {
   transform: translateY(-3px);
   background: var(--card-bg-hover);
