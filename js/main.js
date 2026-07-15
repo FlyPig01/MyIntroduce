@@ -50,6 +50,7 @@
     var phraseIndex = 0;
     var charIndex = 0;
     var isDeleting = false;
+    var timeoutId = null;
     var cursor = document.createElement('span');
     cursor.className = 'typewriter-cursor';
     el.parentNode.insertBefore(cursor, el.nextSibling);
@@ -68,7 +69,7 @@
       }
 
       if (!isDeleting && charIndex === phrase.length) {
-        setTimeout(function () { isDeleting = true; type(); }, 2000);
+        timeoutId = setTimeout(function () { isDeleting = true; type(); }, 2000);
         return;
       }
 
@@ -78,13 +79,13 @@
       }
 
       var speed = isDeleting ? 40 : 80 + Math.random() * 60;
-      setTimeout(type, speed);
+      timeoutId = setTimeout(type, speed);
     }
 
     // 初始延迟
-    setTimeout(type, 1500);
+    timeoutId = setTimeout(type, 1500);
 
-    // 语言切换时重置
+    // 语言切换时重置并重启
     var flags = document.getElementById('langFlags');
     if (flags) {
       flags.addEventListener('click', function (e) {
@@ -96,6 +97,9 @@
             phraseIndex = 0;
             charIndex = 0;
             isDeleting = false;
+            el.textContent = '';
+            clearTimeout(timeoutId);
+            timeoutId = setTimeout(type, 200);
           }
         }
       });
@@ -442,7 +446,7 @@
           playing = true;
         }).catch(function () {
           // 音频文件不存在，静默忽略
-          showToast('请放入 audio/bgm.mp3');
+          showToast('音频加载失败，请检查文件');
         });
       }
     });

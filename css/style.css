@@ -649,14 +649,11 @@ body.loaded .tag {
     font-size: 0.75rem;
   }
 
-  .back-to-top,
-  .music-toggle {
+  .back-to-top {
     width: 38px;
     height: 38px;
-  }
-
-  .music-toggle {
-    bottom: 76px;
+    bottom: 24px;
+    right: 24px;
   }
 
   .preloader-ring {
@@ -722,19 +719,10 @@ body.loaded .tag {
     grid-template-columns: 1fr;
   }
 
-  .back-to-top,
-  .music-toggle {
+  .back-to-top {
     width: 36px;
     height: 36px;
-  }
-
-  .back-to-top {
     bottom: 20px;
-    right: 16px;
-  }
-
-  .music-toggle {
-    bottom: 68px;
     right: 16px;
   }
 }
@@ -852,6 +840,19 @@ body.loaded .tag {
   border: 1px solid var(--border-subtle);
   border-radius: 26px;
   position: relative;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.header-controls .lang-flags {
+  margin-top: 0;
 }
 
 .lang-flag {
@@ -1125,59 +1126,112 @@ body.loaded .tag {
    背景音乐开关
    ============================================ */
 
-.music-toggle {
-  position: fixed;
-  bottom: 84px;
-  right: 28px;
-  z-index: 900;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  background: rgba(10, 10, 26, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  color: var(--accent-secondary);
-  cursor: pointer;
+/* 音乐按钮（语言选项旁） */
+.music-btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-  box-shadow: 0 0 12px rgba(168, 85, 247, 0.15);
+  gap: 6px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-subtle);
+  background: var(--card-bg);
+  color: var(--text-placeholder);
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-.music-toggle:hover {
-  box-shadow: 0 0 24px rgba(168, 85, 247, 0.4);
-  border-color: rgba(168, 85, 247, 0.6);
+.music-btn:hover {
+  color: #a855f7;
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.3);
 }
 
-.music-toggle .music-icon-off {
+.music-btn .music-icon-off,
+.music-btn .music-icon-on {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.music-btn .music-icon-off {
   display: none;
 }
 
-.music-toggle.paused .music-icon-on {
-  display: none;
-}
-
-.music-toggle.paused .music-icon-off {
+.music-btn .music-icon-on {
   display: inline;
 }
 
-.music-toggle.playing .music-icon-on {
-  animation: musicNotePulse 1.5s ease-in-out infinite;
+.music-btn.paused .music-icon-on {
+  display: none;
 }
 
-@keyframes musicNotePulse {
+.music-btn.paused .music-icon-off {
+  display: inline;
+}
+
+/* 声波动画容器 */
+.music-waves {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%, 50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.music-btn.playing .music-waves {
+  opacity: 1;
+}
+
+.music-btn.playing .music-icon-on,
+.music-btn.playing .music-icon-off {
+  opacity: 0;
+}
+
+.wave-bar {
+  width: 2px;
+  background: #a855f7;
+  border-radius: 1px;
+  animation: waveBounce 0.8s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(1) {
+  height: 6px;
+  animation-delay: 0s;
+}
+
+.wave-bar:nth-child(2) {
+  height: 10px;
+  animation-delay: 0.15s;
+}
+
+.wave-bar:nth-child(3) {
+  height: 4px;
+  animation-delay: 0.3s;
+}
+
+.wave-bar:nth-child(4) {
+  height: 8px;
+  animation-delay: 0.45s;
+}
+
+@keyframes waveBounce {
 
   0%,
   100% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scaleY(1);
   }
 
   50% {
-    transform: scale(1.15);
-    opacity: 0.7;
+    transform: scaleY(1.8);
   }
 }
 
