@@ -375,6 +375,7 @@ body {
   font-size: 1.3rem;
   color: var(--text-secondary);
   line-height: 1.8;
+  min-height: 11em;
 }
 
 /* --- 标签区域 --- */
@@ -603,6 +604,7 @@ body.loaded .tag {
 
   .intro-text {
     font-size: 1rem;
+    min-height: 13em;
   }
 
   .section-title {
@@ -692,6 +694,7 @@ body.loaded .tag {
 
   .intro-text {
     font-size: 0.95rem;
+    min-height: 14em;
   }
 
   .section-title {
