@@ -511,15 +511,6 @@ body {
 
 /* Simple Icons 已通过 cdn.simpleicons.org 直接指定颜色，无需 CSS filter */
 
-/* --- 页脚 --- */
-.page-footer {
-  text-align: center;
-  padding-top: var(--spacing-lg);
-  color: var(--text-placeholder);
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
-}
-
 /* ============================================
    动画 - 页面加载入场
    ============================================ */
@@ -637,10 +628,6 @@ body.loaded .tag {
     padding: 6px 16px;
   }
 
-  .page-footer {
-    font-size: 0.9rem;
-  }
-
   .lang-flag {
     font-size: 0.9rem;
     padding: 8px 16px;
@@ -729,10 +716,6 @@ body.loaded .tag {
   .tag {
     font-size: 0.82rem;
     padding: 6px 14px;
-  }
-
-  .page-footer {
-    font-size: 0.85rem;
   }
 
   .skills-grid {

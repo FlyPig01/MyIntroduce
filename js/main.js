@@ -425,7 +425,7 @@
 
     btn.addEventListener('click', function () {
       if (!audio) {
-        audio = new Audio('audio/bgm.mp3');
+        audio = new Audio('audio/Jam - 七月上_H.ogg');
         audio.loop = true;
         audio.volume = 0.3;
       }
@@ -460,7 +460,6 @@
       favGames: '喜欢的游戏',
       contact: '联系我',
       emailLabel: '邮箱',
-      footer: '别人晨练我晨睡，别人学习我拱被',
       cancel: '取消',
       confirm: '确定',
       qq: { title: 'QQ: 3261547169', info: 'QQ号：3261547169', desc: '点击确定将尝试打开 QQ 对话窗口' },
@@ -483,7 +482,6 @@
       favGames: 'Favorite Games',
       contact: 'Contact Me',
       emailLabel: 'Email',
-      footer: 'While others jog at dawn, I sleep in; while others study, I hide under the covers.',
       cancel: 'Cancel',
       confirm: 'OK',
       qq: { title: 'QQ: 3261547169', info: 'QQ: 3261547169', desc: 'Click OK to open QQ chat' },
@@ -506,7 +504,6 @@
       favGames: '好きなゲーム',
       contact: '連絡先',
       emailLabel: 'メール',
-      footer: '他人が朝トレしている頃、私は朝寝。他人が勉強している頃、私は布団に潜る。',
       cancel: 'キャンセル',
       confirm: '確認',
       qq: { title: 'QQ: 3261547169', info: 'QQ番号：3261547169', desc: 'OKをクリックしてQQチャットを開く' },
@@ -529,7 +526,6 @@
       favGames: '좋아하는 게임',
       contact: '연락처',
       emailLabel: '이메일',
-      footer: '남들은 아침 운동을 할 때 나는 아침 잠을 자고, 남들은 공부를 할 때 나는 이불 속으로.',
       cancel: '취소',
       confirm: '확인',
       qq: { title: 'QQ: 3261547169', info: 'QQ번호: 3261547169', desc: '확인을 클릭하여 QQ 채팅 열기' },
