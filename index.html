@@ -11,6 +11,20 @@
 
 <body>
 
+    <!-- 预加载动画 -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">
+            <div class="preloader-ring"></div>
+            <span class="preloader-text" data-i18n="nickname">尘易飞</span>
+        </div>
+        <div class="preloader-bar">
+            <div class="preloader-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- 顶部阅读进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- 动态背景层 -->
     <div class="bg-overlay">
         <div class="bg-orb orb-1"></div>
@@ -26,7 +40,7 @@
         <header class="profile-header animate-on-load">
             <div class="avatar-wrapper">
                 <div class="avatar">
-                    <img src="images/avatar.jpg" alt="头像" referrerpolicy="no-referrer"
+                    <img src="images/avatar.png" alt="头像" referrerpolicy="no-referrer"
                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22><rect fill=%22%231a1a2e%22 width=%22260%22 height=%22260%22/><text fill=%22%23555%22 x=%22130%22 y=%22130%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2216%22>头像</text></svg>'" />
                 </div>
             </div>
@@ -63,15 +77,15 @@
                         Minecraft
                     </span>
                     <span class="tag">
-                        <img src="images/RimWorld.ico" alt="" class="tag-icon" />
+                        <img src="images/RimWorld.png" alt="" class="tag-icon" />
                         RimWorld
                     </span>
                     <span class="tag">
-                        <img src="images/VRChat.ico" alt="" class="tag-icon" />
+                        <img src="images/VRChat.png" alt="" class="tag-icon" />
                         VRChat
                     </span>
                     <span class="tag">
-                        <img src="images/ACLOS.ico" alt="" class="tag-icon" onerror="this.style.display='none'" />
+                        <img src="images/VALORANT.png" alt="" class="tag-icon" />
                         无畏契约
                     </span>
                 </div>
@@ -83,9 +97,15 @@
                 <div class="social-links">
                     <a href="tencent://message/?uin=3261547169" class="social-btn qq" title="QQ: 3261547169"
                         data-info="QQ号：3261547169" data-desc="点击确定将尝试打开 QQ 对话窗口">
-                        <img src="images/QQ.ico" alt="QQ" class="social-icon" />
+                        <img src="images/QQ.png" alt="QQ" class="social-icon" />
                         <span>QQ</span>
                     </a>
+                    <button class="copy-btn" data-copy="3261547169" title="复制QQ号">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor"
+                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                        </svg>
+                    </button>
                     <a href="mailto:3261547169@qq.com" class="social-btn email" title="邮箱: 3261547169@qq.com"
                         data-info="邮箱地址：3261547169@qq.com" data-desc="点击确定将打开邮件客户端">
                         <svg viewBox="0 0 24 24" class="social-icon">
@@ -94,15 +114,68 @@
                         </svg>
                         <span>邮箱</span>
                     </a>
+                    <button class="copy-btn" data-copy="3261547169@qq.com" title="复制邮箱">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                            <path fill="currentColor"
+                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                        </svg>
+                    </button>
                     <a href="https://steamcommunity.com/profiles/76561199515925903/" class="social-btn steam"
                         title="Steam 个人主页" target="_blank" rel="noopener" data-info="即将跳转到 Steam 个人主页"
                         data-desc="steamcommunity.com/profiles/76561199515925903">
-                        <img src="images/Steam.ico" alt="Steam" class="social-icon" />
+                        <img src="images/Steam.png" alt="Steam" class="social-icon" />
                         <span>Steam</span>
                     </a>
                 </div>
             </section>
         </main>
+
+        <!-- 正在学习 -->
+        <section class="skills-section reveal-on-scroll">
+            <h2 class="section-title" data-i18n="learning">正在学习</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Blender</span>
+                        <span class="skill-pct" data-pct="5">5%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width:5%"></div>
+                    </div>
+                    <p class="skill-note">学了开头，然后...打开了游戏</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">Godot</span>
+                        <span class="skill-pct" data-pct="3">3%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width:3%"></div>
+                    </div>
+                    <p class="skill-note">下载了引擎，看了教程序章</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name"><span data-i18n="drawing">绘画</span></span>
+                        <span class="skill-pct" data-pct="8">8%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width:8%"></div>
+                    </div>
+                    <p class="skill-note">买了数位板，画了几条线</p>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name"><span data-i18n="coding">编程</span></span>
+                        <span class="skill-pct" data-pct="15">15%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-bar-fill" style="width:15%"></div>
+                    </div>
+                    <p class="skill-note">Hello World 之后的迷雾</p>
+                </div>
+            </div>
+        </section>
 
         <!-- 页脚 -->
         <footer class="page-footer reveal-on-scroll">
@@ -124,6 +197,29 @@
     </div>
 
     <script src="js/main.js"></script>
+
+    <!-- Toast 提示容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- 回到顶部 -->
+    <button class="back-to-top" id="backToTop" title="回到顶部">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 4l-8 8h5v8h6v-8h5z" />
+        </svg>
+    </button>
+
+    <!-- 音乐开关 -->
+    <button class="music-toggle" id="musicToggle" title="背景音乐">
+        <svg viewBox="0 0 24 24" width="20" height="20" class="music-icon-on">
+            <path fill="currentColor"
+                d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+        </svg>
+        <svg viewBox="0 0 24 24" width="20" height="20" class="music-icon-off">
+            <path fill="currentColor"
+                d="M4.34 2.93L2.93 4.34 7.29 8.7 7 9H3v6h4l5 5v-6.59l4.18 4.18c-.65.49-1.38.88-2.18 1.11v2.06c1.34-.3 2.57-.92 3.61-1.75l2.05 2.05 1.41-1.41L4.34 2.93zM19 12c0 .82-.15 1.61-.41 2.34l1.53 1.53c.56-1.2.88-2.51.88-3.87 0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zm-7-8l-1.88 1.88L12 7.76zm4.5 8c0-1.77-1.02-3.29-2.5-4.03v1.79l2.48 2.48c.01-.08.02-.16.02-.24z" />
+        </svg>
+    </button>
+
 </body>
 
 </html>

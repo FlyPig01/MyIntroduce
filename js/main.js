@@ -1,35 +1,153 @@
 /**
  * 游戏社交个人介绍网页 - 交互逻辑
- * 功能：页面加载动画 + 滚动触发动画（Intersection Observer）
+ * 功能：预加载 + 打字机 + 3D视差 + 粒子连线 + 进度条 + 回到顶部 + 复制 + Toast + 音乐
  */
 
 (function () {
   'use strict';
 
   /**
-   * 页面加载完成后触发入场动画
+   * 预加载动画
+   */
+  function initPreloader() {
+    var preloader = document.getElementById('preloader');
+    if (!preloader) return;
+
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        preloader.classList.add('hidden');
+        setTimeout(function () {
+          if (preloader.parentNode) preloader.parentNode.removeChild(preloader);
+          document.body.classList.add('loaded');
+          initScrollReveal();
+        }, 500);
+      }, 600);
+    });
+  }
+
+  /**
+   * 页面加载完成后触发入场动画（去掉preloader后的备用）
    */
   function initLoadAnimation() {
-    // 延迟一帧确保 CSS transition 初始状态已渲染
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        document.body.classList.add('loaded');
+    // 由 preloader 接管
+  }
+
+  /**
+   * 打字机效果
+   */
+  var typewriterPhrases = {
+    zh: ['轻尘亦可飞扬', '懒癌晚期患者', '半途而废专业户'],
+    en: ['Even dust can soar', 'Chronic procrastinator', 'Master of giving up'],
+    ja: ['塵もまた舞い上がる', '怠け者', '途中で諦める達人'],
+    ko: ['먼지도 날아오를 수 있다', '게으름의 대가', '포기의 달인']
+  };
+
+  function initTypewriter() {
+    var el = document.querySelector('.player-id');
+    if (!el) return;
+
+    var currentLang = 'zh';
+    var phraseIndex = 0;
+    var charIndex = 0;
+    var isDeleting = false;
+    var cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    el.parentNode.insertBefore(cursor, el.nextSibling);
+
+    function type() {
+      var lang = getCurrentLang();
+      var phrases = typewriterPhrases[lang] || typewriterPhrases.zh;
+      var phrase = phrases[phraseIndex];
+
+      if (isDeleting) {
+        el.textContent = phrase.substring(0, charIndex - 1);
+        charIndex--;
+      } else {
+        el.textContent = phrase.substring(0, charIndex + 1);
+        charIndex++;
+      }
+
+      if (!isDeleting && charIndex === phrase.length) {
+        setTimeout(function () { isDeleting = true; type(); }, 2000);
+        return;
+      }
+
+      if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+      }
+
+      var speed = isDeleting ? 40 : 80 + Math.random() * 60;
+      setTimeout(type, speed);
+    }
+
+    // 初始延迟
+    setTimeout(type, 1500);
+
+    // 语言切换时重置
+    var flags = document.getElementById('langFlags');
+    if (flags) {
+      flags.addEventListener('click', function (e) {
+        var btn = e.target.closest('.lang-flag');
+        if (btn) {
+          var lang = btn.getAttribute('data-lang');
+          if (lang !== currentLang) {
+            currentLang = lang;
+            phraseIndex = 0;
+            charIndex = 0;
+            isDeleting = false;
+          }
+        }
       });
+    }
+  }
+
+  function getCurrentLang() {
+    var active = document.querySelector('.lang-flag.active');
+    return active ? active.getAttribute('data-lang') : 'zh';
+  }
+
+  /**
+   * 3D 视差头像
+   */
+  function initAvatarTilt() {
+    var wrapper = document.querySelector('.avatar-wrapper');
+    if (!wrapper) return;
+
+    // 移动端跳过
+    if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) return;
+
+    wrapper.classList.add('tilt-active');
+    var avatar = wrapper.querySelector('.avatar');
+
+    wrapper.addEventListener('mousemove', function (e) {
+      var rect = wrapper.getBoundingClientRect();
+      var x = e.clientX - rect.left - rect.width / 2;
+      var y = e.clientY - rect.top - rect.height / 2;
+      var rotateX = (y / rect.height) * -20;
+      var rotateY = (x / rect.width) * 20;
+
+      avatar.style.transform = 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.02)';
+      avatar.style.boxShadow =
+        (x > 0 ? '' : '-') + '0 0 30px rgba(0, 212, 255, 0.35), ' +
+        (x > 0 ? '-' : '') + '0 0 60px rgba(168, 85, 247, 0.2)';
+    });
+
+    wrapper.addEventListener('mouseleave', function () {
+      avatar.style.transform = 'perspective(600px) rotateX(0) rotateY(0) scale(1)';
+      avatar.style.boxShadow = '0 0 30px rgba(0, 212, 255, 0.25), 0 0 60px rgba(0, 212, 255, 0.1)';
     });
   }
 
   /**
    * Intersection Observer 驱动滚动触发动画
-   * 元素进入视口时添加 .visible class
    */
   function initScrollReveal() {
     var elements = document.querySelectorAll('.reveal-on-scroll');
 
     if (!elements.length) return;
 
-    // 检查 IntersectionObserver 支持
     if (!('IntersectionObserver' in window)) {
-      // 不支持时直接显示所有元素
       for (var i = 0; i < elements.length; i++) {
         elements[i].classList.add('visible');
       }
@@ -42,8 +160,11 @@
           var entry = entries[i];
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            // 每个元素只触发一次
             observer.unobserve(entry.target);
+            // 触发技能条动画
+            if (entry.target.classList.contains('skills-section')) {
+              animateSkillBars(entry.target);
+            }
           }
         }
       },
@@ -59,7 +180,39 @@
   }
 
   /**
-   * 社交按钮点击波纹效果（可选微交互增强）
+   * 技能进度条动画
+   */
+  function animateSkillBars(section) {
+    var fills = section.querySelectorAll('.skill-bar-fill');
+    for (var i = 0; i < fills.length; i++) {
+      (function (fill, idx) {
+        var pct = fill.parentElement.previousElementSibling.querySelector('.skill-pct');
+        var target = parseInt(pct.getAttribute('data-pct')) || 0;
+        var current = 0;
+        var duration = 1000;
+        var start = null;
+
+        function step(timestamp) {
+          if (!start) start = timestamp;
+          var progress = Math.min((timestamp - start) / duration, 1);
+          var eased = 1 - Math.pow(1 - progress, 3);
+          current = Math.round(target * eased);
+          fill.style.width = current + '%';
+          pct.textContent = current + '%';
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          }
+        }
+
+        setTimeout(function () {
+          requestAnimationFrame(step);
+        }, 200 + idx * 150);
+      })(fills[i], i);
+    }
+  }
+
+  /**
+   * 社交按钮点击波纹效果
    */
   function initButtonRipple() {
     var buttons = document.querySelectorAll('.social-btn');
@@ -73,30 +226,13 @@
 
       var ripple = document.createElement('span');
       ripple.style.cssText =
-        'position:absolute;' +
-        'border-radius:50%;' +
-        'background:rgba(255,255,255,0.15);' +
-        'width:' +
-        size +
-        'px;' +
-        'height:' +
-        size +
-        'px;' +
-        'left:' +
-        x +
-        'px;' +
-        'top:' +
-        y +
-        'px;' +
-        'transform:scale(0);' +
-        'animation:ripple 0.6s ease-out forwards;' +
-        'pointer-events:none;';
+        'position:absolute;border-radius:50%;background:rgba(255,255,255,0.15);' +
+        'width:' + size + 'px;height:' + size + 'px;' +
+        'left:' + x + 'px;top:' + y + 'px;' +
+        'transform:scale(0);animation:ripple 0.6s ease-out forwards;pointer-events:none;';
 
       btn.appendChild(ripple);
-
-      ripple.addEventListener('animationend', function () {
-        ripple.remove();
-      });
+      ripple.addEventListener('animationend', function () { ripple.remove(); });
     }
 
     for (var i = 0; i < buttons.length; i++) {
@@ -104,19 +240,14 @@
     }
   }
 
-  // 注入 ripple 动画 keyframes（通过 JS 动态注入，保持 CSS 文件整洁）
   function injectRippleKeyframes() {
     var style = document.createElement('style');
-    style.textContent =
-      '@keyframes ripple{' +
-      'to{transform:scale(4);opacity:0;}' +
-      '}';
+    style.textContent = '@keyframes ripple{to{transform:scale(4);opacity:0;}}';
     document.head.appendChild(style);
   }
 
   /**
    * 社交按钮弹窗确认
-   * 点击按钮 → 显示弹窗 → 确定后跳转
    */
   function initSocialModal() {
     var overlay = document.getElementById('modalOverlay');
@@ -141,7 +272,6 @@
       pendingTarget = null;
     }
 
-    // 拦截社交按钮点击
     var buttons = document.querySelectorAll('.social-btn');
     for (var i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function (e) {
@@ -151,7 +281,6 @@
         var href = this.getAttribute('href');
         var target = this.getAttribute('target');
 
-        // Discord 占位（href="#"）不跳转
         if (href === '#' || !href) {
           openModal(info, desc, null, null);
           return;
@@ -161,7 +290,6 @@
       });
     }
 
-    // 确定按钮 → 跳转
     confirmBtn.addEventListener('click', function () {
       if (pendingHref) {
         if (pendingTarget === '_blank') {
@@ -173,20 +301,149 @@
       closeModal();
     });
 
-    // 取消按钮 → 关闭
     cancelBtn.addEventListener('click', closeModal);
 
-    // 点击遮罩层 → 关闭
     overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) {
-        closeModal();
+      if (e.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeModal();
+    });
+  }
+
+  /**
+   * Toast 提示
+   */
+  function showToast(message) {
+    var container = document.getElementById('toastContainer');
+    if (!container) return;
+
+    var toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    container.appendChild(toast);
+
+    toast.addEventListener('animationend', function (e) {
+      if (e.animationName === 'toastOut') {
+        toast.remove();
+      }
+    });
+  }
+
+  /**
+   * 一键复制
+   */
+  function initCopyButtons() {
+    var buttons = document.querySelectorAll('.copy-btn');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function (e) {
+        e.stopPropagation();
+        var text = this.getAttribute('data-copy') || '';
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () {
+            showToast('已复制');
+          }).catch(function () {
+            fallbackCopy(text);
+          });
+        } else {
+          fallbackCopy(text);
+        }
+      });
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); showToast('已复制'); } catch (e) { showToast('复制失败'); }
+      document.body.removeChild(ta);
+    }
+  }
+
+  /**
+   * 滚动进度条
+   */
+  function initScrollProgress() {
+    var bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          var scrollTop = window.scrollY || document.documentElement.scrollTop;
+          var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+          bar.style.width = Math.min(pct, 100) + '%';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+
+  /**
+   * 回到顶部
+   */
+  function initBackToTop() {
+    var btn = document.getElementById('backToTop');
+    if (!btn) return;
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        requestAnimationFrame(function () {
+          if (window.scrollY > 300) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+          ticking = false;
+        });
+        ticking = true;
       }
     });
 
-    // ESC 键关闭
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        closeModal();
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  /**
+   * 背景音乐开关
+   */
+  function initMusicToggle() {
+    var btn = document.getElementById('musicToggle');
+    if (!btn) return;
+
+    var audio = null;
+    var playing = false;
+
+    btn.addEventListener('click', function () {
+      if (!audio) {
+        audio = new Audio('audio/bgm.mp3');
+        audio.loop = true;
+        audio.volume = 0.3;
+      }
+
+      if (playing) {
+        audio.pause();
+        btn.classList.remove('playing');
+        btn.classList.add('paused');
+        playing = false;
+      } else {
+        audio.play().then(function () {
+          btn.classList.remove('paused');
+          btn.classList.add('playing');
+          playing = true;
+        }).catch(function () {
+          // 音频文件不存在，静默忽略
+          showToast('请放入 audio/bgm.mp3');
+        });
       }
     });
   }
@@ -209,7 +466,11 @@
       confirm: '确定',
       qq: { title: 'QQ: 3261547169', info: 'QQ号：3261547169', desc: '点击确定将尝试打开 QQ 对话窗口' },
       email: { title: '邮箱: 3261547169@qq.com', info: '邮箱地址：3261547169@qq.com', desc: '点击确定将打开邮件客户端' },
-      steam: { title: 'Steam 个人主页', info: '即将跳转到 Steam 个人主页', desc: 'steamcommunity.com/profiles/76561199515925903' }
+      steam: { title: 'Steam 个人主页', info: '即将跳转到 Steam 个人主页', desc: 'steamcommunity.com/profiles/76561199515925903' },
+      learning: '正在学习',
+      drawing: '绘画',
+      coding: '编程',
+      copyToast: '已复制'
     },
     en: {
       _name: 'English',
@@ -225,7 +486,11 @@
       confirm: 'OK',
       qq: { title: 'QQ: 3261547169', info: 'QQ: 3261547169', desc: 'Click OK to open QQ chat' },
       email: { title: 'Email: 3261547169@qq.com', info: 'Email: 3261547169@qq.com', desc: 'Click OK to open email client' },
-      steam: { title: 'Steam Profile', info: 'Opening Steam profile', desc: 'steamcommunity.com/profiles/76561199515925903' }
+      steam: { title: 'Steam Profile', info: 'Opening Steam profile', desc: 'steamcommunity.com/profiles/76561199515925903' },
+      learning: 'Learning',
+      drawing: 'Drawing',
+      coding: 'Coding',
+      copyToast: 'Copied'
     },
     ja: {
       _name: '日本語',
@@ -241,7 +506,11 @@
       confirm: '確認',
       qq: { title: 'QQ: 3261547169', info: 'QQ番号：3261547169', desc: 'OKをクリックしてQQチャットを開く' },
       email: { title: 'メール: 3261547169@qq.com', info: 'メールアドレス：3261547169@qq.com', desc: 'OKをクリックしてメールクライアントを開く' },
-      steam: { title: 'Steamプロフィール', info: 'Steamプロフィールに移動します', desc: 'steamcommunity.com/profiles/76561199515925903' }
+      steam: { title: 'Steamプロフィール', info: 'Steamプロフィールに移動します', desc: 'steamcommunity.com/profiles/76561199515925903' },
+      learning: '勉強中',
+      drawing: '絵',
+      coding: 'プログラミング',
+      copyToast: 'コピーしました'
     },
     ko: {
       _name: '한국어',
@@ -257,7 +526,11 @@
       confirm: '확인',
       qq: { title: 'QQ: 3261547169', info: 'QQ번호: 3261547169', desc: '확인을 클릭하여 QQ 채팅 열기' },
       email: { title: '이메일: 3261547169@qq.com', info: '이메일 주소: 3261547169@qq.com', desc: '확인을 클릭하여 이메일 클라이언트 열기' },
-      steam: { title: 'Steam 프로필', info: 'Steam 프로필로 이동합니다', desc: 'steamcommunity.com/profiles/76561199515925903' }
+      steam: { title: 'Steam 프로필', info: 'Steam 프로필로 이동합니다', desc: 'steamcommunity.com/profiles/76561199515925903' },
+      learning: '공부 중',
+      drawing: '그림',
+      coding: '코딩',
+      copyToast: '복사됨'
     }
   };
 
@@ -416,6 +689,25 @@
         }
       }
 
+      // 粒子连线网络
+      var maxDist = 120;
+      for (var i = 0; i < particles.length; i++) {
+        for (var j = i + 1; j < particles.length; j++) {
+          var dx = particles[i].x - particles[j].x;
+          var dy = particles[i].y - particles[j].y;
+          var dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < maxDist) {
+            var lineAlpha = (1 - dist / maxDist) * 0.15;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = 'rgba(0, 212, 255, ' + lineAlpha + ')';
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
       requestAnimationFrame(animate);
     }
 
@@ -432,8 +724,13 @@
   // --- 初始化 ---
   function init() {
     injectRippleKeyframes();
-    initLoadAnimation();
-    initScrollReveal();
+    initPreloader();
+    initTypewriter();
+    initAvatarTilt();
+    initScrollProgress();
+    initBackToTop();
+    initCopyButtons();
+    initMusicToggle();
     initButtonRipple();
     initSocialModal();
     initLanguageSwitcher();
