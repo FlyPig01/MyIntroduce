@@ -13,7 +13,10 @@
     var preloader = document.getElementById('preloader');
     if (!preloader) return;
 
-    window.addEventListener('load', function () {
+    var done = false;
+    function hide() {
+      if (done) return;
+      done = true;
       setTimeout(function () {
         preloader.classList.add('hidden');
         setTimeout(function () {
@@ -22,7 +25,11 @@
           initScrollReveal();
         }, 500);
       }, 600);
-    });
+    }
+
+    window.addEventListener('load', hide);
+    // 最长等3秒，超过则强制关闭（防止大文件阻塞）
+    setTimeout(hide, 3000);
   }
 
   /**
