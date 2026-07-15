@@ -1303,11 +1303,6 @@ body.loaded .tag {
   transition: width 1.2s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-.skill-item.animated .skill-bar-fill {
-  /* width set inline via style attribute */
-  ;
-}
-
 .skill-note {
   font-size: 0.82rem;
   color: var(--text-placeholder);
