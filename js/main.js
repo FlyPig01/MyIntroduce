@@ -36,14 +36,14 @@
    * 打字机效果
    */
   var typewriterPhrases = {
-    zh: ['轻尘亦可飞扬', '懒癌晚期患者', '半途而废专业户'],
-    en: ['Even dust can soar', 'Chronic procrastinator', 'Master of giving up'],
-    ja: ['塵もまた舞い上がる', '怠け者', '途中で諦める達人'],
-    ko: ['먼지도 날아오를 수 있다', '게으름의 대가', '포기의 달인']
+    zh: ['别人晨练我晨睡，别人学习我拱被', '懒癌晚期，放弃治疗', '今天也在游戏里度过', '想学的东西总在明天开始'],
+    en: ['While others jog, I sleep in', 'Chronic procrastinator', 'Gaming all day every day', 'Tomorrow I will start learning'],
+    ja: ['他人が朝練、私は朝寝', '怠け者、治療放棄', '今日もゲーム三昧', '勉強はいつも明日から'],
+    ko: ['남들은 운동, 나는 침대', '게으름은 불치병', '오늘도 게임 속으로', '공부는 내일부터']
   };
 
   function initTypewriter() {
-    var el = document.querySelector('.player-id');
+    var el = document.getElementById('typewriterLine');
     if (!el) return;
 
     var currentLang = 'zh';
@@ -454,7 +454,6 @@
   var translations = {
     zh: {
       _name: '简体中文',
-      nickname: '尘易飞',
       subtitle: '轻尘亦可飞扬',
       about: '关于我',
       intro: '我是一个计算机专业的大学生——虽然对计算机其实一窍不通来着。<br>不习惯开麦，我主要一个人玩Minecraft、RimWorld、VRChat等游戏。<br>想学习blender，Godot，但是是个懒癌患者，只学了个开头，其实可以说是从未开始。<br>做事情总是半途而废，即使是自己的兴趣。',
@@ -470,11 +469,14 @@
       learning: '正在学习',
       drawing: '绘画',
       coding: '编程',
-      copyToast: '已复制'
+      copyToast: '已复制',
+      skillNote1: '学了开头，然后...打开了游戏',
+      skillNote2: '下载了引擎，看了教程序章',
+      skillNote3: '买了数位板，画了几条线',
+      skillNote4: 'Hello World 之后的迷雾'
     },
     en: {
       _name: 'English',
-      nickname: 'ChenYiFei',
       subtitle: 'Even dust can soar',
       about: 'About Me',
       intro: "I'm a CS major in college — though honestly, I barely know a thing about computers.<br>I don't use voice chat much; I mostly play Minecraft, RimWorld, VRChat solo.<br>I want to learn Blender and Godot, but I'm chronically lazy — only got through the intro, or rather, never really started.<br>I always give up halfway, even on things I'm interested in.",
@@ -490,11 +492,14 @@
       learning: 'Learning',
       drawing: 'Drawing',
       coding: 'Coding',
-      copyToast: 'Copied'
+      copyToast: 'Copied',
+      skillNote1: 'Learned the basics, then... opened a game',
+      skillNote2: 'Downloaded the engine, watched tutorial intro',
+      skillNote3: 'Bought a tablet, drew a few lines',
+      skillNote4: 'Lost in the fog beyond Hello World'
     },
     ja: {
       _name: '日本語',
-      nickname: '尘易飞',
       subtitle: '塵もまた舞い上がる',
       about: '自己紹介',
       intro: 'コンピューター専攻の大学生です——とはいえ、コンピューターのことは実はさっぱりわかりません。<br>ボイスチャットは苦手で、主にMinecraft、RimWorld、VRChatなどを一人でプレイしています。<br>BlenderやGodotを学びたいと思っていますが、怠け者なので最初の部分しか進まず、というか実質始めていません。<br>自分の興味あることでも、いつも途中で投げ出してしまいます。',
@@ -510,11 +515,14 @@
       learning: '勉強中',
       drawing: '絵',
       coding: 'プログラミング',
-      copyToast: 'コピーしました'
+      copyToast: 'コピーしました',
+      skillNote1: '基礎を学んだ後…ゲームを起動',
+      skillNote2: 'エンジンをDL、チュートリアル序章だけ',
+      skillNote3: 'ペンタブ購入、数本の線を描いた',
+      skillNote4: 'Hello Worldの先の霧'
     },
     ko: {
       _name: '한국어',
-      nickname: '尘易飞',
       subtitle: '먼지도 날아오를 수 있다',
       about: '자기소개',
       intro: '컴퓨터 전공 대학생입니다——솔직히 컴퓨터에 대해서는 거의 모릅니다.<br>보이스 채팅은 익숙하지 않고, 주로 Minecraft, RimWorld, VRChat 등을 혼자 플레이합니다.<br>Blender와 Godot를 배우고 싶지만, 게으른 편이라 시작만 해놓고 사실상 진행한 적이 없습니다.<br>흥미 있는 일조차 항상 중간에 포기해버립니다.',
@@ -530,7 +538,11 @@
       learning: '공부 중',
       drawing: '그림',
       coding: '코딩',
-      copyToast: '복사됨'
+      copyToast: '복사됨',
+      skillNote1: '기초 배운 후... 게임 실행',
+      skillNote2: '엔진 다운로드, 튜토리얼 서문만',
+      skillNote3: '타블렛 구매, 선 몇 개 그림',
+      skillNote4: 'Hello World 너머의 안개'
     }
   };
 
@@ -585,7 +597,7 @@
       }
 
       // 更新页面标题
-      document.title = t.nickname + ' - ' + t.about;
+      document.title = '尘易飞 - ' + t.about;
 
       // 更新国旗激活状态
       for (var n = 0; n < flagBtns.length; n++) {

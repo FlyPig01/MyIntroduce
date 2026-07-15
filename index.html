@@ -15,7 +15,7 @@
     <div class="preloader" id="preloader">
         <div class="preloader-logo">
             <div class="preloader-ring"></div>
-            <span class="preloader-text" data-i18n="nickname">尘易飞</span>
+            <span class="preloader-text">尘易飞</span>
         </div>
         <div class="preloader-bar">
             <div class="preloader-bar-fill"></div>
@@ -44,8 +44,9 @@
                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22260%22 height=%22260%22><rect fill=%22%231a1a2e%22 width=%22260%22 height=%22260%22/><text fill=%22%23555%22 x=%22130%22 y=%22130%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2216%22>头像</text></svg>'" />
                 </div>
             </div>
-            <h1 class="nickname" data-i18n="nickname">尘易飞</h1>
+            <h1 class="nickname">尘易飞</h1>
             <p class="player-id" data-i18n="subtitle">轻尘亦可飞扬</p>
+            <p class="typewriter-line" id="typewriterLine"></p>
 
             <!-- 语言切换器 -->
             <div class="lang-flags" id="langFlags">
@@ -95,37 +96,43 @@
             <section class="social-section reveal-on-scroll">
                 <h2 class="section-title" data-i18n="contact">联系我</h2>
                 <div class="social-links">
-                    <a href="tencent://message/?uin=3261547169" class="social-btn qq" title="QQ: 3261547169"
-                        data-info="QQ号：3261547169" data-desc="点击确定将尝试打开 QQ 对话窗口">
-                        <img src="images/QQ.png" alt="QQ" class="social-icon" />
-                        <span>QQ</span>
-                    </a>
-                    <button class="copy-btn" data-copy="3261547169" title="复制QQ号">
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path fill="currentColor"
-                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                        </svg>
-                    </button>
-                    <a href="mailto:3261547169@qq.com" class="social-btn email" title="邮箱: 3261547169@qq.com"
-                        data-info="邮箱地址：3261547169@qq.com" data-desc="点击确定将打开邮件客户端">
-                        <svg viewBox="0 0 24 24" class="social-icon">
-                            <path fill="currentColor"
-                                d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
-                        </svg>
-                        <span>邮箱</span>
-                    </a>
-                    <button class="copy-btn" data-copy="3261547169@qq.com" title="复制邮箱">
-                        <svg viewBox="0 0 24 24" width="16" height="16">
-                            <path fill="currentColor"
-                                d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
-                        </svg>
-                    </button>
-                    <a href="https://steamcommunity.com/profiles/76561199515925903/" class="social-btn steam"
-                        title="Steam 个人主页" target="_blank" rel="noopener" data-info="即将跳转到 Steam 个人主页"
-                        data-desc="steamcommunity.com/profiles/76561199515925903">
-                        <img src="images/Steam.png" alt="Steam" class="social-icon" />
-                        <span>Steam</span>
-                    </a>
+                    <div class="social-item">
+                        <a href="tencent://message/?uin=3261547169" class="social-btn qq" title="QQ: 3261547169"
+                            data-info="QQ号：3261547169" data-desc="点击确定将尝试打开 QQ 对话窗口">
+                            <img src="images/QQ.png" alt="QQ" class="social-icon" />
+                            <span>QQ</span>
+                        </a>
+                        <button class="copy-btn" data-copy="3261547169" title="复制QQ号">
+                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                <path fill="currentColor"
+                                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="social-item">
+                        <a href="mailto:3261547169@qq.com" class="social-btn email" title="邮箱: 3261547169@qq.com"
+                            data-info="邮箱地址：3261547169@qq.com" data-desc="点击确定将打开邮件客户端">
+                            <svg viewBox="0 0 24 24" class="social-icon">
+                                <path fill="currentColor"
+                                    d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                            </svg>
+                            <span>邮箱</span>
+                        </a>
+                        <button class="copy-btn" data-copy="3261547169@qq.com" title="复制邮箱">
+                            <svg viewBox="0 0 24 24" width="14" height="14">
+                                <path fill="currentColor"
+                                    d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="social-item">
+                        <a href="https://steamcommunity.com/profiles/76561199515925903/" class="social-btn steam"
+                            title="Steam 个人主页" target="_blank" rel="noopener" data-info="即将跳转到 Steam 个人主页"
+                            data-desc="steamcommunity.com/profiles/76561199515925903">
+                            <img src="images/Steam.png" alt="Steam" class="social-icon" />
+                            <span>Steam</span>
+                        </a>
+                    </div>
                 </div>
             </section>
         </main>
@@ -142,7 +149,7 @@
                     <div class="skill-bar">
                         <div class="skill-bar-fill" style="width:5%"></div>
                     </div>
-                    <p class="skill-note">学了开头，然后...打开了游戏</p>
+                    <p class="skill-note" data-i18n="skillNote1">学了开头，然后...打开了游戏</p>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
@@ -152,7 +159,7 @@
                     <div class="skill-bar">
                         <div class="skill-bar-fill" style="width:3%"></div>
                     </div>
-                    <p class="skill-note">下载了引擎，看了教程序章</p>
+                    <p class="skill-note" data-i18n="skillNote2">下载了引擎，看了教程序章</p>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
@@ -162,7 +169,7 @@
                     <div class="skill-bar">
                         <div class="skill-bar-fill" style="width:8%"></div>
                     </div>
-                    <p class="skill-note">买了数位板，画了几条线</p>
+                    <p class="skill-note" data-i18n="skillNote3">买了数位板，画了几条线</p>
                 </div>
                 <div class="skill-item">
                     <div class="skill-header">
@@ -172,7 +179,7 @@
                     <div class="skill-bar">
                         <div class="skill-bar-fill" style="width:15%"></div>
                     </div>
-                    <p class="skill-note">Hello World 之后的迷雾</p>
+                    <p class="skill-note" data-i18n="skillNote4">Hello World 之后的迷雾</p>
                 </div>
             </div>
         </section>
