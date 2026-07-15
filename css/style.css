@@ -380,7 +380,9 @@ body {
 }
 
 .tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 24px;
   font-size: 1.1rem;
   font-weight: 500;
@@ -391,6 +393,13 @@ body {
   border-radius: 24px;
   cursor: default;
   transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tag-icon {
+  width: 20px;
+  height: 20px;
+  /* 将黑色 SVG 转为 --accent 色 #00d4ff */
+  filter: brightness(0) saturate(100%) invert(74%) sepia(78%) saturate(2073%) hue-rotate(154deg) brightness(104%) contrast(104%);
 }
 
 .tag:hover {
@@ -489,6 +498,11 @@ body {
   width: 28px;
   height: 28px;
   flex-shrink: 0;
+}
+
+/* Simple Icons img 标签反转白色 */
+.social-btn img.social-icon {
+  filter: brightness(0) invert(1);
 }
 
 /* --- 页脚 --- */
