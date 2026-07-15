@@ -431,32 +431,48 @@
     var btn = document.getElementById('musicToggle');
     if (!btn) return;
 
-    var audio = null;
+    var audio = new Audio('audio/Jam - 七月上_H.ogg');
+    audio.loop = true;
+    audio.volume = 0.3;
     var playing = false;
 
-    btn.addEventListener('click', function () {
-      if (!audio) {
-        audio = new Audio('audio/Jam - 七月上_H.ogg');
-        audio.loop = true;
-        audio.volume = 0.3;
-      }
-
-      if (playing) {
-        audio.pause();
-        btn.classList.remove('playing');
+    function play() {
+      audio.play().then(function () {
+        btn.classList.remove('paused');
+        btn.classList.add('playing');
+        playing = true;
+      }).catch(function () {
         btn.classList.add('paused');
-        playing = false;
-      } else {
-        audio.play().then(function () {
-          btn.classList.remove('paused');
-          btn.classList.add('playing');
-          playing = true;
-        }).catch(function () {
-          // 音频文件不存在，静默忽略
-          showToast('音频加载失败，请检查文件');
-        });
-      }
+      });
+    }
+
+    function pause() {
+      audio.pause();
+      btn.classList.remove('playing');
+      btn.classList.add('paused');
+      playing = false;
+    }
+
+    btn.addEventListener('click', function () {
+      if (playing) { pause(); } else { play(); }
     });
+
+    // 自动播放：页面加载后尝试，失败则等首次点击
+    setTimeout(function () {
+      audio.play().then(function () {
+        btn.classList.add('playing');
+        playing = true;
+      }).catch(function () {
+        btn.classList.add('paused');
+        function onFirstTouch() {
+          play();
+          document.removeEventListener('click', onFirstTouch);
+          document.removeEventListener('touchstart', onFirstTouch);
+        }
+        document.addEventListener('click', onFirstTouch);
+        document.addEventListener('touchstart', onFirstTouch);
+      });
+    }, 1000);
   }
 
   /**
