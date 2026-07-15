@@ -626,8 +626,8 @@ body.loaded .tag {
   }
 
   .lang-flag {
-    font-size: 0.88rem;
-    padding: 6px 14px;
+    font-size: 0.9rem;
+    padding: 8px 16px;
   }
 }
 
@@ -780,42 +780,67 @@ body.loaded .tag {
 }
 
 /* ============================================
-   语言切换器（本国文字标签）
+   语言切换器（标签栏）
    ============================================ */
 
 .lang-flags {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 2px;
   justify-content: center;
-  margin-top: 18px;
+  margin-top: 20px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 26px;
+  position: relative;
 }
 
 .lang-flag {
+  position: relative;
   font-family: var(--font-family);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 500;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  border-radius: 20px;
-  padding: 8px 18px;
+  background: transparent;
+  border: none;
+  border-radius: 22px;
+  padding: 10px 22px;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: color 0.3s ease, background 0.3s ease, text-shadow 0.3s ease;
+  z-index: 1;
+}
+
+.lang-flag::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
 }
 
 .lang-flag:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(0, 212, 255, 0.35);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.12);
+}
+
+.lang-flag:hover::after {
+  width: 30%;
 }
 
 .lang-flag.active {
   color: var(--accent);
-  background: rgba(0, 212, 255, 0.1);
-  border-color: rgba(0, 212, 255, 0.5);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.2);
+  background: rgba(0, 212, 255, 0.12);
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+}
+
+.lang-flag.active::after {
+  width: 60%;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.6);
 }
 
 /* ============================================
